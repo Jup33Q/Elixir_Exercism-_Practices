@@ -1,0 +1,43 @@
+defmodule HighScore do
+  def new() do
+    Map.new()
+  end
+
+  def add_player(scores, name) do
+    scores |> Map.put_new(name,0)
+  end
+
+  def add_player(scores, name, score) do
+    scores |> Map.put_new(name,score)
+  end
+
+  def remove_player(scores, name) do
+    {_,rt}=(scores |> Map.pop(name))
+    rt
+  end
+
+  def reset_score(scores, name) do
+    case scores |> Map.has_key?(name) do
+      true ->
+     scores |> Map.replace(name,0)
+     false -> add_player(scores,name)
+    end
+
+
+  end
+
+  def update_score(scores, name, score) do
+    case scores |> Map.has_key?(name) do
+
+      true ->
+    scores |> Map.replace(name,score)
+     false -> scores |> Map.put_new(name,score)
+
+    end
+  end
+
+  def get_players(scores) do
+    {rt , _} = scores |> Enum.unzip()
+    rt
+  end
+end
